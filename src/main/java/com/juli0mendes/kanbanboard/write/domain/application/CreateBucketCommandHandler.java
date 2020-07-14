@@ -1,0 +1,17 @@
+package com.juli0mendes.kanbanboard.write.domain.application;
+
+import com.juli0mendes.kanbanboard.write.adapter.out.BucketRepositoryImpl;
+import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
+
+public class CreateBucketCommandHandler {
+
+    private final BucketRepository repository;
+
+    public CreateBucketCommandHandler(BucketRepository repository) {
+        this.repository = repository;
+    }
+
+    public void handle(CreateBucketCommand command) {
+        new Bucket
+    }
+}

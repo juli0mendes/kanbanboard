@@ -1,13 +1,12 @@
 package com.juli0mendes.kanbanboard.write.domain.core;
 
-import java.util.Optional;
 import java.util.UUID;
 
 public class ListAggregate {
 
-    private final ListRepository repository;
+    private final BucketRepository repository;
 
-    public ListAggregate(ListRepository repository) {
+    public ListAggregate(BucketRepository repository) {
         this.repository = repository;
     }
 
