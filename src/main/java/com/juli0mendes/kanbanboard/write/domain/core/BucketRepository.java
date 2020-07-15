@@ -4,5 +4,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface BucketRepository {
-    void create(UUID id, int position, String name);
+    void create(Bucket bucket);
 }

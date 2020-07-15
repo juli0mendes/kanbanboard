@@ -1,5 +1,6 @@
 package com.juli0mendes.kanbanboard.write.adapter.out;
 
+import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -16,16 +17,16 @@ public class BucketRepositoryImpl implements BucketRepository {
     }
 
     @Override
-    public void create(UUID id, int position, String name) {
+    public void create(Bucket bucket) {
 
         String sql = """
                 INSERT INTO list(uuid, position, name)
                 values (:uuid, :position, :name)""";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("uuid", id)
-                .addValue("position", position)
-                .addValue("name", name);
+                .addValue("uuid", bucket.getId())
+                .addValue("position", bucket.getPosition())
+                .addValue("name", bucket.getName());
 
         this.jdbcTemplate.update(sql, parameters);
     }

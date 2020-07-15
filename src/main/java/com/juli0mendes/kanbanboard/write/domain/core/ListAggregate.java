@@ -10,7 +10,7 @@ public class ListAggregate {
         this.repository = repository;
     }
 
-    public void create(UUID id, int position, String name) {
-        this.repository.create(id, position, name);
+    public void create(Bucket bucket) {
+        this.repository.create(bucket);
     }
 }
