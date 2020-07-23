@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public record CreateBucketCommand(
         UUID id,
-        Integer position,
+        int position,
         String name) {
 }

@@ -25,16 +25,12 @@ public class BucketTest {
                 .setId(id)
                 .setUuid(uuid)
                 .setName(name)
-                .setPosition(position)
-                .setCreatedAt(createdAt)
-                .setUpdatedAt(updatedAt);
+                .setPosition(position);
 
         // then
         assertThat(bucket.getId()).isEqualTo(id);
         assertThat(bucket.getUuid()).isEqualTo(uuid);
         assertThat(bucket.getPosition()).isEqualTo(position);
         assertThat(bucket.getName()).isEqualTo(name);
-        assertThat(bucket.getCreatedAt()).isEqualTo(createdAt);
-        assertThat(bucket.getUpdatedAt()).isEqualTo(updatedAt);
     }
 }

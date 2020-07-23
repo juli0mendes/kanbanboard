@@ -7,6 +7,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import javax.swing.text.html.Option;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class BucketRepositoryImpl implements BucketRepository {
@@ -30,5 +33,30 @@ public class BucketRepositoryImpl implements BucketRepository {
                 .addValue("name", bucket.getName());
 
         this.jdbcTemplate.update(sql, parameters);
+    }
+
+    public Optional<Bucket> findByUuid(UUID id) {
+
+        String sql = """
+                SELECT uuid, position, name
+                FROM bucket
+                WHERE uuid = :uuid
+                """;
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("uuid", id);
+
+
+        return jdbcTemplate.query(sql, parameters, resultSet -> {
+            if (resultSet.next()) {
+                return Optional.of(new Bucket()
+                    .setUuid(UUID.fromString(resultSet.getString("uuid")))
+                    .setPosition(resultSet.getInt("position"))
+                    .setName(resultSet.getString("name"))
+                );
+            }
+
+            return Optional.empty();
+        });
     }
 }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public abstract class DataSourceHelper {
 
-    protected BasicDataSource dataSource;
+    protected BasicDataSource dataSource = new BasicDataSource();
 
     @BeforeEach
     void init() {
@@ -16,7 +16,6 @@ public abstract class DataSourceHelper {
                 "MODE=PostgreSQL;IGNORECASE=TRUE;" +
                 "INIT=RUNSCRIPT FROM 'classpath:schema.sql'\\;";
 
-        dataSource = new BasicDataSource();
         dataSource.setUrl(url);
         dataSource.setMaxTotal(1);
     }
