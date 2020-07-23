@@ -35,6 +35,7 @@ public class BucketRepositoryImpl implements BucketRepository {
         this.jdbcTemplate.update(sql, parameters);
     }
 
+    @Override
     public Optional<Bucket> findByUuid(UUID id) {
 
         String sql = """
