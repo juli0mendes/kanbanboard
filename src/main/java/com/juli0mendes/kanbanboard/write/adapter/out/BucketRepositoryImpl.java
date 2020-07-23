@@ -4,10 +4,11 @@ import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.UUID;
 
+@Repository
 public class BucketRepositoryImpl implements BucketRepository {
 
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -20,11 +21,11 @@ public class BucketRepositoryImpl implements BucketRepository {
     public void create(Bucket bucket) {
 
         String sql = """
-                INSERT INTO list(uuid, position, name)
+                INSERT INTO bucket(uuid, position, name)
                 values (:uuid, :position, :name)""";
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("uuid", bucket.getId())
+                .addValue("uuid", bucket.getUuid())
                 .addValue("position", bucket.getPosition())
                 .addValue("name", bucket.getName());
 

@@ -1,7 +1,6 @@
 package com.juli0mendes.kanbanboard.write.domain.core;
 
-import java.util.Optional;
-import java.util.UUID;
+import org.springframework.stereotype.Repository;
 
 public interface BucketRepository {
     void create(Bucket bucket);

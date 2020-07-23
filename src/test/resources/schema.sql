@@ -1,4 +1,4 @@
-CREATE TABLE list (
+CREATE TABLE bucket (
     id SERIAL PRIMARY KEY,
     uuid UUID NOT NULL,
     position INT NOT NULL,
