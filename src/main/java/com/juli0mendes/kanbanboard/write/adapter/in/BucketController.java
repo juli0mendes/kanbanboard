@@ -5,6 +5,7 @@ import com.juli0mendes.kanbanboard.write.domain.application.CreateBucketCommandH
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,9 @@ public class BucketController {
     private CreateBucketCommandHandler handler;
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity create(@RequestBody CreateBucketCommand command) throws URISyntaxException {
+    public ResponseEntity create(@Validated  @RequestBody CreateBucketCommand command) throws URISyntaxException {
 
         handler.handle(command);
-
         return ResponseEntity.created(new URI("")).build();
     }
 }
