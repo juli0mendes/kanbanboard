@@ -39,8 +39,15 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
         repository.create(expected);
 
         // then
-        var actual = repository.findByUuid(id);
-        assertThat(actual.get()).isEqualTo(expected);
+        var actualOptional = repository.findByUuid(id);
+
+        Bucket actual = actualOptional.get();
+
+        assertThat(actual.getUuid()).isEqualTo(expected.getUuid());
+        assertThat(actual.getPosition()).isEqualTo(expected.getPosition());
+        assertThat(actual.getName()).isEqualTo(expected.getName());
+        assertThat(actual.getCreatedAt()).isNotNull();
+        assertThat(actual.getUpdatedAt()).isNotNull();
     }
 
     @ParameterizedTest

@@ -25,7 +25,6 @@ public class BucketController {
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity create(@Validated  @RequestBody CreateBucketCommand command) throws URISyntaxException {
-
         handler.handle(command);
         return ResponseEntity.created(new URI("")).build();
     }
