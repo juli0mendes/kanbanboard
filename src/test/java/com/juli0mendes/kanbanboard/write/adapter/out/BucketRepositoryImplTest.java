@@ -1,5 +1,6 @@
 package com.juli0mendes.kanbanboard.write.adapter.out;
 
+import com.juli0mendes.kanbanboard.write.domain.exception.DuplicatedDataException;
 import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import helper.DataSourceHelper;
@@ -51,7 +52,7 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
 
     @ParameterizedTest
     @MethodSource("invalidDataProvider")
-    void GIVEN_AlreadyExistentBucket_MUST_ThrowException(UUID id, int position, String name) {
+    void GIVEN_AlreadyExistentBucket_MUST_ThrowException(UUID id, int position, String name, String errorField) {
 
         // given
         var expected = new Bucket()
@@ -60,7 +61,10 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
                 .setName(name);
 
         // then
-        assertThrows(RuntimeException.class, () -> repository.create(expected));
+        DuplicatedDataException exception = assertThrows(DuplicatedDataException.class, () -> repository.create(expected));
+
+        // when
+        assertThat(exception.getMessage()).isEqualTo("Invalid duplicated data: " + errorField);
     }
 
     private static Stream<Arguments> validDataProvider() {
@@ -72,8 +76,8 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
 
     private static Stream<Arguments> invalidDataProvider() {
         return Stream.of(
-                arguments("8d5732c8-cc85-11ea-87d0-0242ac130003", 1, "TODO"),
-                arguments(UUID.randomUUID(), 100, "DOING")
+                arguments(UUID.fromString("8d5732c8-cc85-11ea-87d0-0242ac130003"), 1, "TODO", "id"),
+                arguments(UUID.randomUUID(), 100, "DOING", "position")
         );
     }
 }
