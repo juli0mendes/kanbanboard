@@ -4,7 +4,6 @@ import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import helper.DataSourceHelper;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -67,16 +66,14 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
     private static Stream<Arguments> validDataProvider() {
         return Stream.of(
                 arguments(UUID.randomUUID(), 1, "TODO"),
-                arguments(UUID.randomUUID(), 2, "DOING"),
-                arguments(UUID.randomUUID(), 3, "DONE")
+                arguments(UUID.randomUUID(), 2, "EXISTENT")
         );
     }
 
     private static Stream<Arguments> invalidDataProvider() {
         return Stream.of(
                 arguments("8d5732c8-cc85-11ea-87d0-0242ac130003", 1, "TODO"),
-                arguments(UUID.randomUUID(), 100, "DOING"),
-                arguments(UUID.randomUUID(), 2, "EXISTENT")
+                arguments(UUID.randomUUID(), 100, "DOING")
         );
     }
 }
