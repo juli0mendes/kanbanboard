@@ -37,8 +37,21 @@ public class BucketRepositoryImpl implements BucketRepository {
                     .addValue("name", bucket.getName());
 
             this.jdbcTemplate.update(sql, parameters);
-        } catch (DuplicateKeyException e) {
-            throw new DuplicatedDataException(e.getMessage(), e);
+
+        } catch (DuplicateKeyException exception) {
+            var duplicatedField = "";
+
+            var existentBucket = this.findByUuidOrPosition(bucket.getUuid(), bucket.getPosition()).get();
+
+            if (existentBucket.getUuid().equals(bucket.getUuid())) {
+                duplicatedField += " - id";
+            }
+
+            if (existentBucket.getPosition() == bucket.getPosition()) {
+                duplicatedField += " - position";
+            }
+
+            throw new DuplicatedDataException(String.format("Invalid duplicated data%s", duplicatedField), exception);
         }
     }
 
@@ -63,6 +76,34 @@ public class BucketRepositoryImpl implements BucketRepository {
                     .setName(resultSet.getString("name"))
                     .setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime())
                     .setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
+                );
+            }
+
+            return Optional.empty();
+        });
+    }
+
+    public Optional<Bucket> findByUuidOrPosition(UUID id, int position) {
+
+        String sql = """
+                SELECT uuid, position, name, created_at, updated_at
+                FROM bucket
+                WHERE uuid = :uuid OR position = :position
+                """;
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("uuid", id)
+                .addValue("position", position);
+
+
+        return jdbcTemplate.query(sql, parameters, resultSet -> {
+            if (resultSet.next()) {
+                return Optional.of(new Bucket()
+                        .setUuid(UUID.fromString(resultSet.getString("uuid")))
+                        .setPosition(resultSet.getInt("position"))
+                        .setName(resultSet.getString("name"))
+                        .setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime())
+                        .setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime())
                 );
             }
 
