@@ -4,6 +4,7 @@ import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import com.juli0mendes.kanbanboard.write.domain.exception.DuplicatedDataException;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,7 @@ public class BucketRepositoryImpl implements BucketRepository {
                     .addValue("name", bucket.getName());
 
             this.jdbcTemplate.update(sql, parameters);
-        } catch (DuplicatedDataException e) {
+        } catch (DuplicateKeyException e) {
             throw new DuplicatedDataException(e.getMessage(), e);
         }
     }
