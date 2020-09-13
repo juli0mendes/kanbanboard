@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -51,7 +52,10 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
 
     @ParameterizedTest
     @MethodSource("invalidDataProvider")
-    void GIVEN_AlreadyExistentBucket_MUST_ThrowException(UUID id, int position, String name, String errorField) {
+    void GIVEN_AlreadyExistentBucket_MUST_ThrowException(UUID id,
+                                                         int position,
+                                                         String name,
+                                                         Map<String, Object> expectedError) {
 
         // given
         var expected = new Bucket()
@@ -63,7 +67,8 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
         DuplicatedDataException exception = assertThrows(DuplicatedDataException.class, () -> repository.create(expected));
 
         // when
-        assertThat(exception.getMessage()).isEqualTo("Invalid duplicated data" + errorField);
+        assertThat(exception.getMessage()).isEqualTo("Invalid duplicated data");
+        assertThat(exception.getErrors()).containsExactlyInAnyOrderEntriesOf(expectedError);
     }
 
     private static Stream<Arguments> validDataProvider() {
@@ -74,10 +79,14 @@ public class BucketRepositoryImplTest extends DataSourceHelper {
     }
 
     private static Stream<Arguments> invalidDataProvider() {
+
+        UUID existentUuid = UUID.fromString("8d5732c8-cc85-11ea-87d0-0242ac130003");
+        int existentPosition = 100;
+
         return Stream.of(
-                arguments(UUID.fromString("8d5732c8-cc85-11ea-87d0-0242ac130003"), 1, "TODO", " - id"),
-                arguments(UUID.randomUUID(), 100, "DOING", " - position"),
-                arguments(UUID.fromString("8d5732c8-cc85-11ea-87d0-0242ac130003"), 100, "WHATEVER", " - id - position")
+                arguments(existentUuid, 1, "TODO", Map.of("id", existentUuid)),
+                arguments(UUID.randomUUID(), existentPosition, "DOING", Map.of("position", existentPosition)),
+                arguments(existentUuid, existentPosition, "WHATEVER", Map.of("id", existentUuid, "position", Integer.valueOf(existentPosition)))
                 );
     }
 }

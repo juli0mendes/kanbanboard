@@ -39,19 +39,17 @@ public class BucketRepositoryImpl implements BucketRepository {
             this.jdbcTemplate.update(sql, parameters);
 
         } catch (DuplicateKeyException exception) {
-            var duplicatedField = "";
 
+            var duplicatedDataException = new DuplicatedDataException("Invalid duplicated data", exception);
             var existentBucket = this.findByUuidOrPosition(bucket.getUuid(), bucket.getPosition()).get();
 
-            if (existentBucket.getUuid().equals(bucket.getUuid())) {
-                duplicatedField += " - id";
-            }
+            if (existentBucket.getUuid().equals(bucket.getUuid()))
+                duplicatedDataException.addError("id", bucket.getUuid());
 
-            if (existentBucket.getPosition() == bucket.getPosition()) {
-                duplicatedField += " - position";
-            }
+            if (existentBucket.getPosition() == bucket.getPosition())
+                duplicatedDataException.addError("position", bucket.getPosition());
 
-            throw new DuplicatedDataException(String.format("Invalid duplicated data%s", duplicatedField), exception);
+            throw duplicatedDataException;
         }
     }
 

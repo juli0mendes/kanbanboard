@@ -2,7 +2,6 @@ package com.juli0mendes.kanbanboard.write.adapter.in;
 
 import com.juli0mendes.kanbanboard.write.domain.application.CreateBucketCommand;
 import com.juli0mendes.kanbanboard.write.domain.application.CreateBucketCommandHandler;
-import com.juli0mendes.kanbanboard.write.domain.exception.DomainException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,11 +26,7 @@ public class BucketController {
     @PostMapping(path = BUCKETS_PATH, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity create(@Validated @RequestBody CreateBucketCommand command) throws URISyntaxException {
 
-        try {
-            handler.handle(command);
-        } catch (DomainException exception) {
-            return ResponseEntity.badRequest().body(exception.getMessage());
-        }
+        handler.handle(command);
 
         return ResponseEntity
                 .created(new URI(String.format("/%s/%s", BUCKETS_PATH, command.id())))
