@@ -41,6 +41,7 @@ public class BucketRepositoryImpl implements BucketRepository {
         } catch (DuplicateKeyException exception) {
 
             var duplicatedDataException = new DuplicatedDataException("Invalid duplicated data", exception);
+
             var existentBucket = this.findByUuidOrPosition(bucket.getUuid(), bucket.getPosition()).get();
 
             if (existentBucket.getUuid().equals(bucket.getUuid()))

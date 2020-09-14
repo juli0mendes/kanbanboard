@@ -29,6 +29,8 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(DuplicatedDataException.class)
     public ResponseEntity<Object> onDuplicatedDataException(DuplicatedDataException exception) {
+
+        exception.addError("message", exception.getMessage());
         return new ResponseEntity<>(exception.getErrors(), HttpStatus.BAD_REQUEST);
     }
 }
