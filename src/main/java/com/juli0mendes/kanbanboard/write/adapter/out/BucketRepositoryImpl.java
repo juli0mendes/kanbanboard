@@ -3,14 +3,12 @@ package com.juli0mendes.kanbanboard.write.adapter.out;
 import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import com.juli0mendes.kanbanboard.write.domain.exception.DuplicatedDataException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 import java.util.UUID;
 
