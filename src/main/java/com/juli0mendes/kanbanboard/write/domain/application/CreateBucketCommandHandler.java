@@ -5,7 +5,7 @@ import com.juli0mendes.kanbanboard.write.domain.core.BucketRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateBucketCommandHandler {
+public class CreateBucketCommandHandler implements Handler<CreateBucketCommand> {
 
     private final BucketRepository repository;
 
