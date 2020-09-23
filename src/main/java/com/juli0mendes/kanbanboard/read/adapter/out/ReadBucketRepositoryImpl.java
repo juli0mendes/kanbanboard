@@ -1,11 +1,13 @@
 package com.juli0mendes.kanbanboard.read.adapter.out;
 
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public class ReadBucketRepositoryImpl {
 
     private NamedParameterJdbcTemplate jdbcTemplate;
