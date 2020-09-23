@@ -2,6 +2,7 @@ package com.juli0mendes.kanbanboard.write;
 
 import com.juli0mendes.kanbanboard.write.domain.application.Command;
 import com.juli0mendes.kanbanboard.write.domain.application.Handler;
+import com.juli0mendes.kanbanboard.write.event.CommandEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;

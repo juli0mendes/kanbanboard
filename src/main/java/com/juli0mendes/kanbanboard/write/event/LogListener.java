@@ -1,8 +1,6 @@
 package com.juli0mendes.kanbanboard.write.event;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.juli0mendes.kanbanboard.write.CommandEvent;
+import com.juli0mendes.kanbanboard.write.domain.exception.DomainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.EventListener;
@@ -15,9 +13,16 @@ public class LogListener {
     Logger logger = LoggerFactory.getLogger(LogListener.class);
 
     @Async
-    @EventListener(condition = "#event.exception == null")
-    void onSuccess(CommandEvent event) {
-        logger.info(event.toJson());
+    @EventListener
+    void onEventOccur(CommandEvent event) {
+
+        if (event.isSuccess()) {
+            logger.info(event.toJson());
+        } else if (event.getException() instanceof DomainException) {
+            logger.warn(event.toJson(), event.getException());
+        } else {
+            logger.error(event.toJson(), event.getException());
+        }
     }
 
     @Async
