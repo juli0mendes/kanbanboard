@@ -13,11 +13,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class BucketRepositoryImpl implements BucketRepository {
+public class WriteBucketRepositoryImpl implements BucketRepository {
 
     private NamedParameterJdbcTemplate jdbcTemplate;
 
-    public BucketRepositoryImpl(DataSource dataSource) {
+    public WriteBucketRepositoryImpl(DataSource dataSource) {
         this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 

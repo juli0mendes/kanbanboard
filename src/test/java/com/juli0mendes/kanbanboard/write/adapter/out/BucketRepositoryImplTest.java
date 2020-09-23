@@ -20,11 +20,11 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class BucketRepositoryImplTest extends DataSourceHelper {
 
-    BucketRepositoryImpl repository;
+    WriteBucketRepositoryImpl repository;
 
     @BeforeEach
     void setup() {
-        repository = new BucketRepositoryImpl(dataSource);
+        repository = new WriteBucketRepositoryImpl(dataSource);
     }
 
     @Test

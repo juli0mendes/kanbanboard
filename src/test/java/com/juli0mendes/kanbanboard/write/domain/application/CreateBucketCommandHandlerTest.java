@@ -1,6 +1,6 @@
 package com.juli0mendes.kanbanboard.write.domain.application;
 
-import com.juli0mendes.kanbanboard.write.adapter.out.BucketRepositoryImpl;
+import com.juli0mendes.kanbanboard.write.adapter.out.WriteBucketRepositoryImpl;
 import com.juli0mendes.kanbanboard.write.domain.core.Bucket;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -8,7 +8,6 @@ import org.mockito.ArgumentCaptor;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -24,7 +23,7 @@ public class CreateBucketCommandHandlerTest {
         var position = 1;
         var name = "TODO";
         var command = new CreateBucketCommand(id, position, name);
-        var repository = mock(BucketRepositoryImpl.class);
+        var repository = mock(WriteBucketRepositoryImpl.class);
 
         // when
         var handler = new CreateBucketCommandHandler(repository);
