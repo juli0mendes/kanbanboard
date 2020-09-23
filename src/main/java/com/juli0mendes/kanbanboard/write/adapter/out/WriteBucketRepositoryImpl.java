@@ -12,6 +12,8 @@ import javax.sql.DataSource;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.juli0mendes.kanbanboard.write.domain.exception.DomainException.Error.INVALID_DUPLICATED_DATA;
+
 @Repository
 public class WriteBucketRepositoryImpl implements BucketRepository {
 
@@ -38,7 +40,7 @@ public class WriteBucketRepositoryImpl implements BucketRepository {
 
         } catch (DuplicateKeyException exception) {
 
-            var duplicatedDataException = new DuplicatedDataException("Invalid duplicated data", exception);
+            var duplicatedDataException = new DuplicatedDataException(INVALID_DUPLICATED_DATA, exception);
 
             var existentBucket = this.findByUuidOrPosition(bucket.getUuid(), bucket.getPosition()).get();
 
