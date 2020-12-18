@@ -22,10 +22,7 @@ function buildTemplate(tmpId, context) {
 }
 
 const routes = {
-  '#/': () => {
-    return 'default page'
-  },
-  '#/buckets': async() => {
+  '#/': async() => {
     const res = await fetch(`${baseUrl}/v1/buckets`)
     const json = await res.json();
     return buildTemplate('buckets-list', { buckets: json })
