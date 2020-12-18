@@ -18,7 +18,7 @@ public class ReadBucketRepositoryImpl {
 
     public List<BucketDto> findAll() {
 
-        var sql = "select uuid, position, name FROM bucket";
+        var sql = "select uuid, position, name FROM bucket ORDER BY position";
 
         return this.jdbcTemplate.query(sql, (rs, rowNum) ->
                 new BucketDto(
